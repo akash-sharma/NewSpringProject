@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+           	http://www.springframework.org/schema/beans/spring-beans.xsd
+           	http://www.springframework.org/schema/mvc
+           	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+           	http://www.springframework.org/schema/tx 
+    		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+           	http://www.springframework.org/schema/security
+           	http://www.springframework.org/schema/security/spring-security-3.2.xsd
+           	http://www.springframework.org/schema/context
+           	http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<mvc:annotation-driven />
+  	<context:component-scan base-package="com.akash.controller, com.akash.model.domain,
+  	 com.akash.model.domain.dao, com.akash.model.domain.dao.impl, com.akash.service.impl,
+  	 com.akash.service" />
+  					
+	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	  	<!--
+	    <property name="driverClassName" value="org.postgresql.Driver"/>
+	    <property name="url" value="jdbc:postgresql://localhost:5432/auditLogging"/>
+	    <property name="username" value="postgres"/>
+	    <property name="password" value="postgres"/>
+	    <property name="validationQuery" value="SELECT 1"/> 
+	    -->
+	    
+	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+	    <property name="url" value="jdbc:mysql://localhost:3306/newSpringProject"/>
+	    <property name="username" value="root"/>
+	    <property name="password" value=""/>
+	    <property name="validationQuery" value="SELECT 1"/> 
+    
+	</bean>
+   	
+	<!-- Hibernate Session Factory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	    <property name="dataSource" ref="myDataSource"/>
+	    <property name="packagesToScan">
+      		<array>
+        		<value>com.akash.model.domain</value>
+      		</array>
+    	</property>
+    	<property name="hibernateProperties">
+      		<props>
+            	<prop key="hibernate.hbm2ddl.auto">create</prop>
+            	<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+            	<prop key="hibernate.show_sql">true</prop>
+      		</props>
+    	</property>
+    	
+  	</bean>
+   	
+  	<!-- Hibernate Transaction Manager -->
+  	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+  	</bean>
+   	
+  	<!-- Activates annotation based transaction management -->
+  	<tx:annotation-driven transaction-manager="transactionManager"/> 
+    
+</beans>
