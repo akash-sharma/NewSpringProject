@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.akash.constant.Gender;
 import com.akash.model.domain.Person;
 import com.akash.service.PersonService;
+
+//	http://www.journaldev.com/2668/spring-mvc-form-validation-example-using-annotation-and-custom-validator-implementation
+
+//	http://spring.io/blog/2012/10/30/spring-mvc-from-jsp-and-tiles-to-thymeleaf
+//	http://viralpatel.net/blogs/tutorial-create-custom-tag-library-taglib-in-jsp/
 
 @Controller
 public class DashboardController
@@ -75,5 +83,19 @@ public class DashboardController
 		else
 			response="no person is present with that id";
 		return response;
+	}
+	
+	@RequestMapping(value="/addPerson1", method=RequestMethod.GET)
+	public String addPerson1(@ModelAttribute("person") Person person ,BindingResult result , Model model)
+	{
+		System.out.println("result.hasErrors() addPerson1 : "+result.hasErrors());
+		return "addPerson1";
+	}
+	
+	@RequestMapping(value="/addPerson2", method=RequestMethod.GET)
+	public String addPerson2(@Validated Person person, BindingResult result ,Model model)
+	{
+		System.out.println("result.hasErrors() addPerson2 : "+result.hasErrors());
+		return "addPerson2";
 	}
 }

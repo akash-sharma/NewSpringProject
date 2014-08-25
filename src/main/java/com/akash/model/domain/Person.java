@@ -14,7 +14,7 @@ public class Person
 	private long id;
 	@Version
 	private int version;
-	
+		
 	private String name;
 	private int age;
 	private boolean isNabalik;

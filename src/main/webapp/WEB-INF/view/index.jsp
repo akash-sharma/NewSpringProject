@@ -21,6 +21,12 @@
 			salary : ${user.salary}  <br>
 		</c:forEach>
 		
+		<form:form >
+			name : <input type="text" name="name" id="name" />
+			age : <input type="text" name="age" id="age" />
+			
+		</form:form>
+		
 		<%@ include file="footer.html" %>
 		
 	</body>
