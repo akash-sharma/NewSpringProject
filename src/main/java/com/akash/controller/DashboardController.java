@@ -1,5 +1,10 @@
 package com.akash.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -23,13 +28,32 @@ public class DashboardController
 	public String homePage(Model model)
 	{
 		System.out.println("index page");
+		List listOfUsers=new ArrayList();
+		for(int i=0; i<5; i++)
+		{
+			Map mapData=new HashMap();
+			mapData.put("name", "rahul dravid_"+(i+1));
+			mapData.put("age", i+20);
+			mapData.put("salary", i*10+200);
+			listOfUsers.add(mapData);
+		}
+		model.addAttribute("listOfUsers", listOfUsers);
 		return "index";
+	}
+	
+	@RequestMapping(value="/header" , method=RequestMethod.GET)
+	public String header(Model model)
+	{
+		System.out.println("header part executed...");
+		model.addAttribute("name", "akash");
+		return "header";
 	}
 	
 	@RequestMapping(value="/savePerson", method=RequestMethod.GET)
 	@ResponseBody
 	public String savePerson(Model model)
 	{
+		System.out.println("savePerson action");
 		Person person=new Person();
 		person.setAge(20);
 		person.setNabalik(false);
@@ -43,6 +67,7 @@ public class DashboardController
 	@ResponseBody
 	public String readPerson(Model model)
 	{
+		System.out.println("readPerson action");
 		Person person=personService.get(1);
 		String response="";
 		if(person!=null)
