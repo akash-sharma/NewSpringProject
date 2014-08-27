@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,17 +87,47 @@ public class DashboardController
 		return response;
 	}
 	
-	@RequestMapping(value="/addPerson1", method=RequestMethod.GET)
+	@RequestMapping(value="/addPerson1", method=RequestMethod.POST)
 	public String addPerson1(@ModelAttribute("person") Person person ,BindingResult result , Model model)
 	{
-		System.out.println("result.hasErrors() addPerson1 : "+result.hasErrors());
-		return "addPerson1";
+		boolean hasErrors=result.hasErrors();
+		System.out.println("result.hasErrors() addPerson1 : "+hasErrors);
+		if(hasErrors)
+		{
+			model.addAttribute("command", result);
+			
+			for (Object object : result.getAllErrors()) {
+			    if(object instanceof FieldError) {
+			        FieldError fieldError = (FieldError) object;
+
+			        System.out.println("D:"+fieldError.getCode()+" , "+fieldError.getField()+" , "+fieldError.getDefaultMessage());
+			        
+			    }
+
+			    if(object instanceof ObjectError) {
+			        ObjectError objectError = (ObjectError) object;
+
+			        System.out.println("E:"+objectError.getCode());
+			    }
+			}
+			
+			return "index";
+		}
+		else
+			return "addPerson1";
 	}
 	
-	@RequestMapping(value="/addPerson2", method=RequestMethod.GET)
+	@RequestMapping(value="/addPerson2", method=RequestMethod.POST)
 	public String addPerson2(@Validated Person person, BindingResult result ,Model model)
 	{
-		System.out.println("result.hasErrors() addPerson2 : "+result.hasErrors());
-		return "addPerson2";
+		boolean hasErrors=result.hasErrors();
+		System.out.println("result.hasErrors() addPerson2 : "+hasErrors);
+		if(hasErrors)
+		{
+			model.addAttribute("command", result);
+			return "index";
+		}
+		else
+			return "addPerson2";
 	}
 }

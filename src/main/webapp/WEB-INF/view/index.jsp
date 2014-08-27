@@ -21,13 +21,24 @@
 			salary : ${user.salary}  <br>
 		</c:forEach>
 		
-		<form:form >
-			name : <input type="text" name="name" id="name" />
-			age : <input type="text" name="age" id="age" />
+		<form:form action="addPerson1" commandName="person" method="post">
+			name : <input type="text" id="name" name="name"/>
+			<form:errors path="name" />
 			
+			
+			age : <input  type="text" id="age" name="id" />
+			<form:errors path="age" />
+			
+			gender : <select name="gender">
+                        <option value="" label="Select Gender" />
+                        <option value="${com.akash.constant.Gender.MALE}" label="Male" />
+                        <option value="${com.akash.constant.Gender.FEMALE}" label="Female" />
+                    </select>
+			<input type="submit" name="submit">
 		</form:form>
 		
 		<%@ include file="footer.html" %>
 		
 	</body>
 </html>
+

@@ -4,6 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Version;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.akash.constant.Gender;
 
@@ -15,9 +21,16 @@ public class Person
 	@Version
 	private int version;
 		
+	@NotNull
+	@NotEmpty
+	@Size(min=2, max=30) 
 	private String name;
+	
+	@NotNull @Min(18) @Max(100)
 	private int age;
 	private boolean isNabalik;
+	
+	@NotNull
 	private Gender gender;
 	
 	public long getId() {
