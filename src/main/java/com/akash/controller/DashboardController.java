@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -87,47 +84,23 @@ public class DashboardController
 		return response;
 	}
 	
-	@RequestMapping(value="/addPerson1", method=RequestMethod.POST)
-	public String addPerson1(@ModelAttribute("person") Person person ,BindingResult result , Model model)
+	@RequestMapping(value="/addPerson", method=RequestMethod.GET)
+	public String addPerson(Model model)
 	{
-		boolean hasErrors=result.hasErrors();
-		System.out.println("result.hasErrors() addPerson1 : "+hasErrors);
-		if(hasErrors)
-		{
-			model.addAttribute("command", result);
-			
-			for (Object object : result.getAllErrors()) {
-			    if(object instanceof FieldError) {
-			        FieldError fieldError = (FieldError) object;
-
-			        System.out.println("D:"+fieldError.getCode()+" , "+fieldError.getField()+" , "+fieldError.getDefaultMessage());
-			        
-			    }
-
-			    if(object instanceof ObjectError) {
-			        ObjectError objectError = (ObjectError) object;
-
-			        System.out.println("E:"+objectError.getCode());
-			    }
-			}
-			
-			return "index";
-		}
-		else
-			return "addPerson1";
+		return "addPerson";
 	}
 	
-	@RequestMapping(value="/addPerson2", method=RequestMethod.POST)
-	public String addPerson2(@Validated Person person, BindingResult result ,Model model)
+	@RequestMapping(value="/savePerson", method=RequestMethod.POST)
+	public String savePerson(@Validated Person person, BindingResult result ,Model model)
 	{
 		boolean hasErrors=result.hasErrors();
-		System.out.println("result.hasErrors() addPerson2 : "+hasErrors);
+		System.out.println("result.hasErrors() addPerson : "+hasErrors);
 		if(hasErrors)
-		{
-			model.addAttribute("command", result);
-			return "index";
-		}
+			return "addPerson";
 		else
-			return "addPerson2";
+		{
+			//save this person in DB
+			return "addPerson";
+		}
 	}
 }
