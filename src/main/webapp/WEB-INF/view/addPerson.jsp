@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 
 <%@ page import="com.akash.constant.Gender" %>
-<%@ page import="java.util.List" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -13,33 +14,31 @@
 </head>
 <body>
 	<form:form action="savePerson" commandName="person" method="post">
-		name : 	<input type="text" id="name" name="name"
-					<c:choose>
-					<c:when test="${not empty person}">value="${person.name}"</c:when>
-					<c:otherwise>value=""</c:otherwise>
-					</c:choose>
-				/>
-		<font color="red"><form:errors path="name" /></font>
+		name :
+		<form:input path="name"/>
+		<form:errors class="errorColor" path="name" />
 		<br/><br/>
 		
-		age : 	<input  type="text" id="age" name="age"
-					<c:choose> 
-					<c:when test="${not empty person}">value="${person.age}"</c:when>
-					<c:otherwise>value=""</c:otherwise>
-					</c:choose>
-				/>
-		<font color="red"><form:errors path="age" /></font>
+		age :
+		<form:input path="age"/>
+		<form:errors path="age" class="errorColor"/>
 		<br/><br/>
 		
-		gender : <select name="gender">
-                       <option value="" label="Select Gender" />
-                       <option value="MALE" label="Male" />
-                       <option value="${Gender.FEMALE}" label="Female" />
-                   </select>
-        <font color="red"><form:errors path="gender" /></font>   
+		gender :  
+		<form:select path="gender" >
+			<form:option value="" label="--Please Select Gender--"/>
+            <form:options items="${Gender.values()}" />
+		</form:select>
+        <form:errors path="gender" class="errorColor"/>
         <br/><br/>
            
 		<input type="submit" name="submit">
 	</form:form>
+	
+	<style>
+		.errorColor{
+			color: red;
+		}
+	</style>
 </body>
 </html>

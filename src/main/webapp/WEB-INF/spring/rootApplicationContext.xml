@@ -21,8 +21,8 @@
 	
 	<mvc:annotation-driven />
   	<context:component-scan base-package="com.akash.controller, com.akash.model.domain,
-  	 com.akash.model.domain.dao, com.akash.model.domain.dao.impl, com.akash.service.impl,
-  	 com.akash.service" />
+  	 com.akash.model.domain.validator, com.akash.model.domain.dao, com.akash.model.domain.dao.impl,
+  	 com.akash.service.impl, com.akash.service"/>
   					
 	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 	  	<!--

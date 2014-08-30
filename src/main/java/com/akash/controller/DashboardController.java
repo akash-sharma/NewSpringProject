@@ -21,6 +21,8 @@ import com.akash.service.PersonService;
 
 //	http://www.journaldev.com/2668/spring-mvc-form-validation-example-using-annotation-and-custom-validator-implementation
 
+// http://docs.spring.io/spring-framework/docs/4.0.5.RELEASE/spring-framework-reference/htmlsingle/
+
 //	http://spring.io/blog/2012/10/30/spring-mvc-from-jsp-and-tiles-to-thymeleaf
 //	http://viralpatel.net/blogs/tutorial-create-custom-tag-library-taglib-in-jsp/
 
@@ -87,19 +89,18 @@ public class DashboardController
 	@RequestMapping(value="/addPerson", method=RequestMethod.GET)
 	public String addPerson(Model model)
 	{
+		model.addAttribute("person", new Person());
 		return "addPerson";
 	}
 	
 	@RequestMapping(value="/savePerson", method=RequestMethod.POST)
 	public String savePerson(@Validated Person person, BindingResult result ,Model model)
 	{
-		boolean hasErrors=result.hasErrors();
-		System.out.println("result.hasErrors() addPerson : "+hasErrors);
-		if(hasErrors)
+		if(result.hasErrors())
 			return "addPerson";
 		else
 		{
-			//save this person in DB
+//			personService.save(person);
 			return "addPerson";
 		}
 	}
