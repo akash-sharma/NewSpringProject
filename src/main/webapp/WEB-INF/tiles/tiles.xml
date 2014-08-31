@@ -6,14 +6,18 @@
     <definition name="base.definition" template="/WEB-INF/view/layout/layout.jsp">
         <put-attribute name="title" value="" />
         <put-attribute name="header" value="/WEB-INF/view/header.jsp" />
-        <put-attribute name="menu" value="/WEB-INF/view/menu.jsp" />
         <put-attribute name="body" value="" />
         <put-attribute name="footer" value="/WEB-INF/view/footer.html" />
     </definition>
   
-    <definition name="hello" extends="base.definition">
-        <put-attribute name="title" value="Testing with Tiles" />
-        <put-attribute name="body" value="/WEB-INF/view/hello.jsp" />
+    <definition name="index" extends="base.definition">
+        <put-attribute name="title" value="index page" />
+        <put-attribute name="body" value="/WEB-INF/view/index.jsp" />
+    </definition>
+    
+    <definition name="addPerson" extends="base.definition">
+        <put-attribute name="title" value="addPerson page" />
+        <put-attribute name="body" value="/WEB-INF/view/addPerson.jsp" />
     </definition>
 
 </tiles-definitions>
