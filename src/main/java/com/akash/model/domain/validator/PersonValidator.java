@@ -20,7 +20,6 @@ public class PersonValidator implements Validator
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "age", "field.required", "field age cannot be empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "gender", "field.required", "field gender cannot be empty");
 		Person person = (Person)target;
-		System.out.println("aaaaaaaa"+person.getAge()+" , "+person.getName()+" , "+person.getGender());
 		validateName(person.getName(), errors);
 		validateAge(person.getAge(), errors);
 		validateGender(person.getGender(), errors);

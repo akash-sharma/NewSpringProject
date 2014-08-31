@@ -11,12 +11,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.akash.constant.Gender;
 import com.akash.model.domain.Person;
+import com.akash.model.domain.validator.PersonValidator;
 import com.akash.service.PersonService;
 
 //	http://www.journaldev.com/2668/spring-mvc-form-validation-example-using-annotation-and-custom-validator-implementation
@@ -86,6 +89,11 @@ public class DashboardController
 		return response;
 	}
 	
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+	    binder.setValidator(new PersonValidator());
+	}
+	
 	@RequestMapping(value="/addPerson", method=RequestMethod.GET)
 	public String addPerson(Model model)
 	{
@@ -96,12 +104,8 @@ public class DashboardController
 	@RequestMapping(value="/savePerson", method=RequestMethod.POST)
 	public String savePerson(@Validated Person person, BindingResult result ,Model model)
 	{
-		if(result.hasErrors())
-			return "addPerson";
-		else
-		{
-//			personService.save(person);
-			return "addPerson";
-		}
+		if( !result.hasErrors() )
+			personService.save(person);
+		return "addPerson";
 	}
 }
