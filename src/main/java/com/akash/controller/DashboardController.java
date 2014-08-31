@@ -13,14 +13,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.akash.constant.Gender;
 import com.akash.model.domain.Person;
 import com.akash.model.domain.validator.PersonValidator;
 import com.akash.service.PersonService;
+import com.akash.service.impl.CustomValidator;
 
 //	http://www.journaldev.com/2668/spring-mvc-form-validation-example-using-annotation-and-custom-validator-implementation
 
@@ -61,27 +62,14 @@ public class DashboardController
 		return "header";
 	}
 	
-	@RequestMapping(value="/savePerson", method=RequestMethod.GET)
+	@RequestMapping(value="/readPerson/{personId}", method=RequestMethod.GET)
 	@ResponseBody
-	public String savePerson(Model model)
+	public String readPerson(@PathVariable String personId, Model model)
 	{
-		System.out.println("savePerson action");
-		Person person=new Person();
-		person.setAge(20);
-		person.setNabalik(false);
-		person.setName("rahul dravid");
-		person.setGender(Gender.Male);
-		personService.save(person);
-		return "new person is saved";
-	}
-	
-	@RequestMapping(value="/readPerson", method=RequestMethod.GET)
-	@ResponseBody
-	public String readPerson(Model model)
-	{
-		System.out.println("readPerson action");
-		Person person=personService.get(1);
 		String response="";
+		System.out.println("readPerson action");
+		long personIdAsLong=CustomValidator.parseStrTolong(personId, 0l);
+		Person person=personService.get(personIdAsLong);
 		if(person!=null)
 			response="name="+person.getName()+" , version="+person.getVersion()+" , age="+person.getAge();
 		else
