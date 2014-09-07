@@ -64,17 +64,11 @@ public class DashboardController
 	
 	@RequestMapping(value="/readPerson/{personId}", method=RequestMethod.GET)
 	@ResponseBody
-	public String readPerson(@PathVariable String personId, Model model)
+	public Person readPerson(@PathVariable String personId, Model model)
 	{
-		String response="";
-		System.out.println("readPerson action");
 		long personIdAsLong=CustomValidator.parseStrTolong(personId, 0l);
 		Person person=personService.get(personIdAsLong);
-		if(person!=null)
-			response="name="+person.getName()+" , version="+person.getVersion()+" , age="+person.getAge();
-		else
-			response="no person is present with that id";
-		return response;
+		return person;
 	}
 	
 	@InitBinder

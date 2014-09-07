@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <html>
 	<head>
@@ -24,7 +21,28 @@
 			salary : ${user.salary}  <br>
 		</c:forEach>
 		<br/>
+		<div id="testTemplate"></div><br>
+		
 		<%@ include file="footer.html" %>
+	
+<script>
+	$(document).ready(function(){
+		updateData();
+	});
+	
+	function updateData()
+	{
+		$.ajax({
+			  url: "${pageContext.request.contextPath}/readPerson/1",
+			})
+			.done(function(person) {
+			  	if(person=="") //when person object is null 
+			  		alert("data is null");
+			  	else
+			  		$("#testTemplate").html(JSON.stringify(person));
+			});
+	}
+</script>
 		
 	</body>
 </html>

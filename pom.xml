@@ -16,9 +16,17 @@
 		<mysql-version>5.1.6</mysql-version>
   		<spring.ws.version>2.2.0.RELEASE</spring.ws.version>
   		<org.apache.tiles.version>3.0.4</org.apache.tiles.version>
+  		<jackson.version>1.9.10</jackson.version>
 	</properties>
 	
 	<dependencies>
+	
+		<!-- Jackson JSON Mapper -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
 	
 		<!-- tiles api -->
 			<dependency>
