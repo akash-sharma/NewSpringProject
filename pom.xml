@@ -17,6 +17,7 @@
   		<spring.ws.version>2.2.0.RELEASE</spring.ws.version>
   		<org.apache.tiles.version>3.0.4</org.apache.tiles.version>
   		<jackson.version>1.9.10</jackson.version>
+  		<spring-security-version>3.2.5.RELEASE</spring-security-version>
 	</properties>
 	
 	<dependencies>
@@ -133,7 +134,24 @@
    				<artifactId>spring-oxm</artifactId>  
    				<version>${org.springframework-version}</version>  
   			</dependency>
-				
+			
+		<!-- spring security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring-security-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring-security-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring-security-version}</version>
+		</dependency>	
+			
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.springframework</groupId>
