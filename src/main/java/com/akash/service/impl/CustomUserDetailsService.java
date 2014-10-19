@@ -14,7 +14,16 @@ import com.akash.model.domain.dao.UserDao;
 @Service("customUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService
 {
-//	http://www.baeldung.com/spring-security-authentication-provider
+	/*
+	 * http://www.baeldung.com/spring-security-authentication-provider
+	 * 
+	 * This service provided by spring security fetches the UserDetails object for a username.
+	 * This UserDetails object contains username, password and any other verification token.
+	 * 
+	 * When user logs in, it calls this service to find a user with given username,
+	 * then spring security verifies its password on its own.
+	 * 
+	 */
 	
 	@Autowired
 	@Qualifier(value="userDao")
