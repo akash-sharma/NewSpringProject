@@ -3,11 +3,13 @@ package com.akash.model.domain;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -31,8 +33,8 @@ public class User implements Serializable
     private  String username;
     private String emailId;
     
-    @ManyToMany
-    private Set<Authority> authorities;
+    @ManyToMany(fetch=FetchType.EAGER)
+    private Set<Authority> authorities=new HashSet<Authority>();
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;

@@ -1,6 +1,7 @@
 package com.akash.model.domain;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -67,6 +68,7 @@ public class UserInSession implements UserDetails, CredentialsContainer
             throw new IllegalArgumentException("Cannot pass null or empty values to constructor");
         }
 
+        
         this.username = username;
         this.emailId=emailId;
         this.password = password;
@@ -75,6 +77,7 @@ public class UserInSession implements UserDetails, CredentialsContainer
         this.credentialsNonExpired = credentialsNonExpired;
         this.accountNonLocked = accountNonLocked;
         this.authorities = Collections.unmodifiableSet(sortAuthorities(authorities));
+        
     }
 
     //~ Methods ========================================================================================================

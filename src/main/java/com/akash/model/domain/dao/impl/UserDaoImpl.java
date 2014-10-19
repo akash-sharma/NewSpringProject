@@ -25,7 +25,7 @@ public class UserDaoImpl implements UserDao
 		User user=null;
 		Session session=getSession();
 		session.beginTransaction();
-		List list=session.createQuery("from User where username=:username").setParameter("username", username).list();
+		List list=session.createQuery("from Users where username=:username").setParameter("username", username).list();
 		if(list.size()>0)
 			user=(User)list.get(0);
 		session.getTransaction().commit();

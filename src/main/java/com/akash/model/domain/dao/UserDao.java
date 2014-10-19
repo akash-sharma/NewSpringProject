@@ -5,4 +5,5 @@ import com.akash.model.domain.User;
 public interface UserDao
 {
 	User findByUsername(String username);
+	
 }
