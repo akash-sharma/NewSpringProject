@@ -33,7 +33,8 @@ public class User implements Serializable
     private  String username;
     private String emailId;
     
-    @ManyToMany(fetch=FetchType.EAGER)
+//    http://stackoverflow.com/questions/19928568/hibernate-best-practice-to-pull-all-lazy-collections
+    @ManyToMany(fetch=FetchType.LAZY)
     private Set<Authority> authorities=new HashSet<Authority>();
     private boolean accountNonExpired;
     private boolean accountNonLocked;

@@ -17,19 +17,16 @@ public class UserDaoImpl implements UserDao
 	private SessionFactory sessionFactory;
 	
 	private Session getSession(){
-		return sessionFactory.openSession();
+		return sessionFactory.getCurrentSession();
 	}
 	
 	public User findByUsername(String username)
 	{
 		User user=null;
-		Session session=getSession();
-		session.beginTransaction();
-		List list=session.createQuery("from Users where username=:username").setParameter("username", username).list();
-		if(list.size()>0)
+		List<User> list=getSession().createQuery("from Users where username=:username").setParameter("username", username).list();
+		if(list.size()>0) {
 			user=(User)list.get(0);
-		session.getTransaction().commit();
-		session.close();
+		}
 		return user;
 	}
 }

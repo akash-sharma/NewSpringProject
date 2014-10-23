@@ -1,11 +1,13 @@
 package com.akash.service.impl;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.akash.model.domain.User;
 import com.akash.model.domain.UserInSession;
@@ -37,6 +39,7 @@ public class CustomUserDetailsService implements UserDetailsService
 	}
 	
 	@Override
+	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
 	{
 		UserDetails userDetails=null;
@@ -48,6 +51,7 @@ public class CustomUserDetailsService implements UserDetailsService
 	        boolean credentialsNonExpired = user.isCredentialsNonExpired();
 	        boolean accountNonLocked = user.isAccountNonLocked();
 	        if(enabled && accountNonExpired && credentialsNonExpired && accountNonLocked) {
+	        	Hibernate.initialize(user.getAuthorities());
 	        	userDetails=new UserInSession(user.getUsername(),user.getPassword(),user.getEmailId(),user.getAuthorities() );
 	        	System.out.println("userDetails object after login :"+userDetails);
 	        }
