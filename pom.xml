@@ -18,6 +18,7 @@
   		<org.apache.tiles.version>3.0.4</org.apache.tiles.version>
   		<jackson.version>1.9.10</jackson.version>
   		<spring-security-version>3.2.5.RELEASE</spring-security-version>
+  		<xmlschema.version>1.4.3</xmlschema.version>
 	</properties>
 	
 	<dependencies>
@@ -124,16 +125,36 @@
 		    <artifactId>spring-orm</artifactId>
 		    <version>${org.springframework-version}</version>
 		 </dependency>
-		 <dependency>  
-		   	<groupId>org.springframework.ws</groupId>  
-		   	<artifactId>spring-ws-core</artifactId>  
-		   	<version>${spring.ws.version}</version>  
-		  </dependency>
+		 
+		 <dependency>
+			<groupId>org.springframework.ws</groupId>
+			<artifactId>spring-ws-core</artifactId>
+			<version>${spring.ws.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-aop</artifactId>
+				 </exclusion>
+				 <exclusion>
+				 	<groupId>org.springframework</groupId>
+					<artifactId>spring-oxm</artifactId>
+				 </exclusion>
+			</exclusions>
+		</dependency>
+		 
+		 
 		  <dependency>  
    				<groupId>org.springframework</groupId>  
    				<artifactId>spring-oxm</artifactId>  
    				<version>${org.springframework-version}</version>  
   			</dependency>
+		
+		<dependency>
+			<groupId>wsdl4j</groupId>
+			<artifactId>wsdl4j</artifactId>
+			<version>1.6.3</version>
+		</dependency>
+		
 			
 		<!-- spring security -->
 		<dependency>
@@ -292,6 +313,38 @@
                     <mainClass>org.test.int1.Main</mainClass>
                 </configuration>
             </plugin>
+            
+            <!-- 
+				This plugin helps to generate class files for request response objects and 
+				their respective data 
+			-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<phase>generate-sources</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<clearOutputDir>false</clearOutputDir>
+					<outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+					<includeSchema>**/*.xsd</includeSchema>
+					<schemaDirectory>${project.basedir}/src/main/resources/xsdSchema</schemaDirectory>
+					<enableIntrospection>false</enableIntrospection>
+				</configuration>
+			</plugin>
+            
+            <plugin>
+			  <groupId>org.eclipse.jetty</groupId>
+			  <artifactId>jetty-maven-plugin</artifactId>
+			  <version>9.2.3.v20140905</version>
+			</plugin>
+            
         </plugins>
     </build>
 </project>

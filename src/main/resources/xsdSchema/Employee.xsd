@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+		xmlns="http://data.ws.akash.com/employee" 
+		targetNamespace="http://data.ws.akash.com/employee" elementFormDefault="qualified">
+		
+	<xsd:element name="EmployeeSalRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="employeeId" type="xsd:int" />
+				<!--
+				 this will convert to Integer by adding this
+				 maxOccurs="1" minOccurs="1" nillable="true" 
+				 -->
+				 
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="EmployeeSalResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="employeeSalary" type="xsd:string"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
+
+<!--
+	http://stackoverflow.com/questions/1155809/spring-ws-generates-wsdl-without-operations 
+ -->
