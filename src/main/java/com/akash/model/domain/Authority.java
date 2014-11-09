@@ -16,8 +16,10 @@ public class Authority implements GrantedAuthority
 	@Id
     @GeneratedValue
     private Integer id;
-	
 	private String authority;
+	
+	@ManyToMany(mappedBy="authorities")
+	Set<User> users=new HashSet<User>();
 	
 	public Integer getId() {
 		return id;
@@ -26,9 +28,6 @@ public class Authority implements GrantedAuthority
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	@ManyToMany(mappedBy="authorities")
-	Set<User> users=new HashSet<User>();
 	
 	public Set<User> getUsers() {
 		return users;

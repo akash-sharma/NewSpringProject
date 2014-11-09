@@ -1,3 +1,4 @@
+
 http://docs.spring.io/spring-security/site/docs/3.0.x/reference/ns-config.html
 
 http://www.baeldung.com/2012/12/20/authentication-against-a-restful-service/
@@ -119,60 +120,98 @@ OR
 
 (3)
 
-This class is used for autheticating user and loading user object in spring session.
-How a user can be authenticated only by its username ?
-It must be a combination of username and password.
-
-class implementing  org.springframework.security.core.userdetails.UserDetailsService
-
-
+Create a class that implements org.springframework.security.core.userdetails.UserDetailsService
+You have to override 
 public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException ;
 
+We provide this class as authentication provider for spring security.
+Internally this is used for authenticating user.
+
+How?
+Answer: 
+The loadUserByUsername() method takes username as an argument, 
+then it fetches UserDetails (User extends UserDetails) object,
+then it internally compares the UserDetails object and and user details provided by the user at 
+login time (i.e. username and password)
+This concept also helps when password is encrypted using hashing algorithms 
+that are not bidirectional i.e. you cannot get original password from encrypted password. 
+
+(4)
+
+Spring security requires for 2 entity classes : User and Authority.
+User helps in authentication
+Authority helps in authorization.
+
+Luckily spring security itself provides these classes in its api,
+you just need to extend these classes according to your need.
+
+org.springframework.security.core.userdetails.User implements UserDetails, CredentialsContainer
+org.springframework.security.core.GrantedAuthority implements Serializable
+
+Create following Entities in your project : User.java , Authority.java 
+For showing user object on pages and saving it in a session object we prefer to make a copy of User 
+class that have all required data for User. We may name this as UserInSession.
+Object of this class will be saved in session via spring security when a user successfully login in an application.
+
+So finally we have 3 class:
+User			(entity)
+Authority 		(entity)
+UserInSession	(not an entity)
 
 
+@Entity(name="Users")
+public class User implements Serializable
+{
+//We prefer to name the entity as Users because User is reserved keyword in some of the database.
 
+	private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
+	@Id
+    @GeneratedValue
+    private Integer id;
+    private String password;
+    private  String username;
+    private String emailId;
+    
+    @ManyToMany
+    private Set<Authority> authorities=new HashSet<Authority>();
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
+}
 
-(4) Two tables are created: Users , Authorities
+@Entity
+public class Authority implements GrantedAuthority
+{
+	@Id
+    @GeneratedValue
+    private Integer id;
+	private String authority;
+	
+	@ManyToMany(mappedBy="authorities")
+	Set<User> users=new HashSet<User>();
+}
+//GrantedAuthority implements Serializable
 
-(schema will be created by hibernate automaically.)
-
-create table users(
-      username varchar_ignorecase(50) not null primary key,
-      password varchar_ignorecase(50) not null,
-      enabled boolean not null);
-
-  create table authorities (
-      username varchar_ignorecase(50) not null,
-      authority varchar_ignorecase(50) not null,
-      constraint fk_authorities_users foreign key(username) references users(username));
-      create unique index ix_auth_username on authorities (username,authority);
+public class UserInSession implements UserDetails, CredentialsContainer
+{
+	private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
+	
+    private transient String password;
+    private final String username;
+    private final String emailId;
+    private final Set<GrantedAuthority> authorities;
+    private final boolean accountNonExpired;
+    private final boolean accountNonLocked;
+    private final boolean credentialsNonExpired;
+    private final boolean enabled;
+}
 
 
 
 (5)
+Annotations Used for authorizations that can be used on classes or methods :
 
-org.springframework.security.core.userdetails.Users.java  impelements Serializable
-org.springframework.security.core.GrantedAuthority.java   impelements Serializable
-
-
-The VO class that is managed in session must implement  org.springframework.security.core.userdetails.Users.java class .
-
-
-
-Users.java
-
-	private String password;
-    	private final String username;
-    	private final Set<GrantedAuthority> authorities;
-    	private final boolean accountNonExpired;
-    	private final boolean accountNonLocked;
-    	private final boolean credentialsNonExpired;
-    	private final boolean enabled;
-
-
-
-Authorities.java implement org.springframework.security.core.GrantedAuthority.java  interface
-
-
-
+@PreAuthorize("isAnonymous()")
+@PreAuthorize("hasAuthority('ROLE_TELLER')")
 
