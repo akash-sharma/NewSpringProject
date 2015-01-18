@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -30,6 +33,9 @@ import com.akash.service.impl.CustomValidator;
 //	http://spring.io/blog/2012/10/30/spring-mvc-from-jsp-and-tiles-to-thymeleaf
 //	http://viralpatel.net/blogs/tutorial-create-custom-tag-library-taglib-in-jsp/
 
+//	http://www.eclipsezone.com/eclipse/forums/t53459.html
+//	http://xstream.codehaus.org/tutorial.html
+
 @Controller
 public class DashboardController
 {
@@ -38,8 +44,9 @@ public class DashboardController
 	private PersonService personService;
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
-	public String homePage(Model model)
+	public String homePage(HttpServletRequest req, HttpServletResponse res, Model model)
 	{
+		
 		System.out.println("index page");
 		List listOfUsers=new ArrayList();
 		for(int i=0; i<5; i++)
