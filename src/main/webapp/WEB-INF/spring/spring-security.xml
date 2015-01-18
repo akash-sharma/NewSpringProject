@@ -9,17 +9,18 @@
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security-3.2.xsd">
     
+    <http pattern="/favicon.ico" security="none" />
     
-    <http auto-config='true'>
-	<intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-	<intercept-url pattern="/endpoints/*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-	<intercept-url pattern="/**" access="IS_AUTHENTICATED_REMEMBERED" /> 	<!-- IS_AUTHENTICATED_REMEMBERED -->
-	<form-login 
-	    	login-page='/login' 
-		default-target-url="/" 
-		authentication-failure-url="/login?error" 
-		username-parameter="j_username"
-		password-parameter="j_password" />
+    <http auto-config='true'>    	
+		<intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<intercept-url pattern="/endpoints/*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<intercept-url pattern="/**" access="IS_AUTHENTICATED_REMEMBERED" />
+		<form-login 
+		    	login-page='/login'
+			default-target-url="/"
+			authentication-failure-url="/login?error"
+			username-parameter="j_username"
+			password-parameter="j_password" />
 	</http>
 	
 	

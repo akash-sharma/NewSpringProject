@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,11 +44,17 @@ public class DashboardController
 	@Qualifier(value="personService")
 	private PersonService personService;
 	
+	@Value("${IsValidExample}")
+	private boolean isValidExample;
+	
+	@Value("${IsValidFile}")
+	private boolean isValidFile;
+	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String homePage(HttpServletRequest req, HttpServletResponse res, Model model)
 	{
 		
-		System.out.println("index page");
+		System.out.println("index page:"+isValidExample);
 		List listOfUsers=new ArrayList();
 		for(int i=0; i<5; i++)
 		{
