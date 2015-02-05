@@ -4,6 +4,8 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<%@ taglib tagdir="/WEB-INF/tags" prefix="mycustom" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -15,7 +17,8 @@
 <body>
 	<form:form action="savePerson" commandName="person" method="post">
 		name :
-		<form:input path="name"/>
+		<%-- <form:input path="name"/> --%>
+		<mycustom:input path="name" />
 		<form:errors class="errorColor" path="name" />
 		<br/><br/>
 		
