@@ -16,18 +16,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MyRestController {
 
 	@RequestMapping(value = "/myAction1/{param1}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public @ResponseBody List<Abc> myAction1(@PathVariable String param1) {
+	public @ResponseBody List<Abc> myAction1(
+			@PathVariable("param1") String param1) {
 
 		Abc ob = new Abc();
 		ob.setAge(20);
-		ob.setName("obama-"+param1);
+		ob.setName("obama-" + param1);
 		List<Abc> listOfAbc = new ArrayList<Abc>();
 		listOfAbc.add(ob);
 		return listOfAbc;
 	}
 
 	/*
-	 * curl -X GET -H "Accept:application/json"
+	 * curl -i -X GET -H "Accept:application/json"
 	 * http://localhost:8080/myRest/myAction1/123
 	 */
 
@@ -44,7 +45,7 @@ public class MyRestController {
 	}
 
 	/*
-	 * curl -X POST -H "Accept: application/json" -H
+	 * curl -i -X POST -H "Accept: application/json" -H
 	 * "Content-Type: application/json" http://localhost:8080/myRest/myAction2
 	 * -d "{\"listOfAbc\":[{\"age\":20,\"name\":\"akash\"}]}"
 	 */
@@ -60,7 +61,7 @@ public class MyRestController {
 		return listOfAbc;
 	}
 	/*
-	 * curl -X POST -H "Accept: application/json" -H
+	 * curl -i -X POST -H "Accept: application/json" -H
 	 * "Content-Type: application/json" http://localhost:8080/myRest/myAction3
 	 * -d "{\"listOfAbc\":[{\"age\":20,\"name\":\"akash\"}]}"
 	 */
