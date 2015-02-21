@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/myRest")
 public class MyRestController {
+	
+//	Rest ws security => http://docs.oracle.com/cd/E24329_01/web.1211/e24983/toc.htm
+//	jax ws http://docs.oracle.com/javaee/6/tutorial/doc/bnayl.html
+//	http://stackoverflow.com/questions/4817643/how-to-secure-restful-web-services
 
 	@RequestMapping(value = "/myAction1/{param1}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<Abc> myAction1(

@@ -19,7 +19,7 @@ import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.util.Assert;
 
 @Entity(name="Users")
-public class User implements Serializable
+public class User implements Serializable, BaseDomain
 {
 	private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 

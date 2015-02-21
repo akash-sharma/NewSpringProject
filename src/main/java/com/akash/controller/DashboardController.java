@@ -37,6 +37,10 @@ import com.akash.service.impl.CustomValidator;
 //	http://www.eclipsezone.com/eclipse/forums/t53459.html
 //	http://xstream.codehaus.org/tutorial.html
 
+
+// important =>   intercept the call of session in db in hibernate
+
+
 @Controller
 public class DashboardController
 {

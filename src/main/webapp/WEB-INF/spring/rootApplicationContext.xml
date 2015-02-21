@@ -41,7 +41,7 @@
 	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 	  	<!--
 	    <property name="driverClassName" value="org.postgresql.Driver"/>
-	    <property name="url" value="jdbc:postgresql://localhost:5432/auditLogging"/>
+	    <property name="url" value="jdbc:postgresql://localhost:5432/newSpringProject"/>
 	    <property name="username" value="postgres"/>
 	    <property name="password" value="postgres"/>
 	    <property name="validationQuery" value="SELECT 1"/> 
@@ -57,8 +57,37 @@
 		SQL SELECT statement that returns at least one row. -->
     
 	</bean>
+	
+	<!-- Activates annotation based transaction management -->
+  	<tx:annotation-driven transaction-manager="transactionManager"/>
    	
-	<!-- Hibernate Session Factory -->
+   	<bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+   		<property name="persistenceProvider" >
+   			<bean class="org.hibernate.ejb.HibernatePersistence" />
+   		</property>
+	    <property name="dataSource" ref="myDataSource"/>
+	    <property name="packagesToScan">
+      		<array>
+        		<value>com.akash.model.domain</value>
+      		</array>
+    	</property>
+    	<property name="jpaProperties">
+      		<props>
+            	<prop key="hibernate.hbm2ddl.auto">create</prop>
+            	<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+            	<prop key="hibernate.show_sql">true</prop>
+            	<prop key="javax.persistence.validation.mode">none</prop>
+      		</props>
+    	</property>
+    	
+  	</bean>
+   	
+  	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    	<property name="entityManagerFactory" ref="emf"/>
+  	</bean>
+   	
+   	<!-- Hibernate specific configuration -->
+	<!-- 
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 	    <property name="dataSource" ref="myDataSource"/>
 	    <property name="packagesToScan">
@@ -77,12 +106,10 @@
     	
   	</bean>
    	
-  	<!-- Hibernate Transaction Manager -->
   	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
     	<property name="sessionFactory" ref="sessionFactory"/>
   	</bean>
-   	
-  	<!-- Activates annotation based transaction management -->
-  	<tx:annotation-driven transaction-manager="transactionManager"/> 
+   	-->
+  	
     
 </beans>

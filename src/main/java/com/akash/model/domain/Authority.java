@@ -11,7 +11,7 @@ import javax.persistence.ManyToMany;
 import org.springframework.security.core.GrantedAuthority;
 
 @Entity
-public class Authority implements GrantedAuthority
+public class Authority implements GrantedAuthority, BaseDomain
 {
 	@Id
     @GeneratedValue

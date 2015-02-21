@@ -8,7 +8,7 @@ import javax.persistence.Version;
 import com.akash.constant.Gender;
 
 @Entity
-public class Person
+public class Person implements BaseDomain
 {
 	@Id @GeneratedValue
 	private long id;
