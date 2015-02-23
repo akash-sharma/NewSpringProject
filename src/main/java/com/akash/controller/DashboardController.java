@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,6 +45,8 @@ import com.akash.service.impl.CustomValidator;
 @Controller
 public class DashboardController
 {
+	Logger logger = Logger.getLogger(DashboardController.class);
+	
 	@Autowired
 	@Qualifier(value="personService")
 	private PersonService personService;
@@ -58,7 +61,7 @@ public class DashboardController
 	public String homePage(HttpServletRequest req, HttpServletResponse res, Model model)
 	{
 		
-		System.out.println("index page:"+isValidExample);
+		logger.debug("index page:"+isValidExample);
 		List listOfUsers=new ArrayList();
 		for(int i=0; i<5; i++)
 		{
@@ -75,7 +78,7 @@ public class DashboardController
 	@RequestMapping(value="/header" , method=RequestMethod.GET)
 	public String header(Model model)
 	{
-		System.out.println("header part executed...");
+		logger.debug("header part executed...");
 		model.addAttribute("name", "akash");
 		return "header";
 	}
