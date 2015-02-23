@@ -10,7 +10,7 @@
 						http://www.springframework.org/schema/context 
 						http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/resources/**" location="classpath:JS/resources/" />
 
 	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
 		Example: a logical view name of 'showMessage' is mapped to '/WEB-INF/jsp/showMessage.jsp' 
