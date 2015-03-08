@@ -37,8 +37,34 @@
 </style>
 </head>
 <body onload='document.loginForm.username.focus();'>
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '528900730583058',
+      xfbml      : true,
+      version    : 'v2.2'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
  
 	<h1>Spring Security Custom Login Form (Annotation)</h1>
+	
+	<div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
  
 	<div id="login-box">
  

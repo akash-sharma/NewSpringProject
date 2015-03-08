@@ -44,5 +44,6 @@
 	}
 </script>
 		
+		<a href="${pageContext.request.contextPath}/facebook/oauth2/login">facebook</a>
 	</body>
 </html>

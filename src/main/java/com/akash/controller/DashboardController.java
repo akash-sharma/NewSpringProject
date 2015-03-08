@@ -60,7 +60,6 @@ public class DashboardController
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String homePage(HttpServletRequest req, HttpServletResponse res, Model model)
 	{
-		
 		logger.debug("index page:"+isValidExample);
 		List listOfUsers=new ArrayList();
 		for(int i=0; i<5; i++)
