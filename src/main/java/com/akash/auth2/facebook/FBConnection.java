@@ -20,7 +20,7 @@ public class FBConnection {
 			fbLoginUrl = "http://www.facebook.com/dialog/oauth?" + "client_id="
 					+ FBConnection.FB_APP_ID + "&redirect_uri="
 					+ URLEncoder.encode(FBConnection.REDIRECT_URI, "UTF-8")
-					+ "&scope=email,user_likes,publish_actions,manage_friendlists,read_friendlists";
+					+ "&scope=email,user_likes,publish_actions,user_friends";
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
