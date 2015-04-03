@@ -100,5 +100,6 @@ public class FacebookController {
  * http://stackoverflow.com/questions/23417356/facebook-graph-api-v2-0-me-
  * friends-returns-empty-or-only-friends-who-also-u
  * 
+ * http://www.petrikainulainen.net/spring-social-tutorial/
  * 
  */
