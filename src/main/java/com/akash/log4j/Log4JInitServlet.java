@@ -16,6 +16,9 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+
+//	http://logging.apache.org/log4j/1.2/manual.html
+//	http://logging.apache.org/log4j/2.x/manual/
 public class Log4JInitServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
