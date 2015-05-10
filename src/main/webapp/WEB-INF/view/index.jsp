@@ -25,24 +25,6 @@
 		
 		<%@ include file="footer.html" %>
 	
-<script>
-	$(document).ready(function(){
-		updateData();
-	});
-	
-	function updateData()
-	{
-		$.ajax({
-			  url: "${pageContext.request.contextPath}/readPerson/1",
-			})
-			.done(function(person) {
-			  	if(person=="") //when person object is null 
-			  		alert("data is null");
-			  	else
-			  		$("#testTemplate").html(JSON.stringify(person));
-			});
-	}
-</script>
 		
 		<a href="${pageContext.request.contextPath}/facebook/oauth2/login">facebook</a>
 	</body>

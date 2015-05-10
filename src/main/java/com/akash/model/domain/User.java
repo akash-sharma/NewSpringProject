@@ -10,8 +10,6 @@ import java.util.TreeSet;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -19,16 +17,12 @@ import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.util.Assert;
 
 @Entity(name="Users")
-public class User implements Serializable, BaseDomain
+public class User extends AbstractBaseDomain implements Serializable
 {
 	private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
     //~ Instance fields ================================================================================================
-	
-	@Id
-    @GeneratedValue
-    private Integer id;
-	
+		
     private String password;
     private  String username;
     private String emailId;
@@ -41,12 +35,6 @@ public class User implements Serializable, BaseDomain
     private boolean credentialsNonExpired;
     private boolean enabled;
     
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
 	public String getEmailId() {
 		return emailId;
 	}

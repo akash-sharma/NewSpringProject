@@ -4,30 +4,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 
 @Entity
-public class Authority implements GrantedAuthority, BaseDomain
+public class Authority extends AbstractBaseDomain implements GrantedAuthority
 {
-	@Id
-    @GeneratedValue
-    private Integer id;
+	private static final long serialVersionUID = 1234567L;
+
 	private String authority;
 	
 	@ManyToMany(mappedBy="authorities")
 	Set<User> users=new HashSet<User>();
-	
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 	
 	public Set<User> getUsers() {
 		return users;

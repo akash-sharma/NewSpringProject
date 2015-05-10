@@ -7,6 +7,8 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.hibernate.Session;
+
 import com.akash.model.domain.BaseDomain;
 import com.akash.model.domain.dao.BaseDao;
 
@@ -17,13 +19,18 @@ public class BaseDaoImpl implements BaseDao {
 	private EntityManager entityManager;
 
 	public void setEntityManager(EntityManager entityManager) {
-		System.out.println("entityManager : "+entityManager);
+		System.out.println("entityManager : " + entityManager);
 		this.entityManager = entityManager;
 	}
 
 	@Override
 	public EntityManager getEntityManager() {
 		return entityManager;
+	}
+
+	@Override
+	public Session getSession() {
+		return getEntityManager().unwrap(Session.class);
 	}
 
 	@Override
@@ -37,7 +44,7 @@ public class BaseDaoImpl implements BaseDao {
 	}
 
 	@Override
-	public BaseDomain get(Class<? extends BaseDomain> clazz, Long id) {
+	public BaseDomain get(Class<? extends BaseDomain> clazz, String id) {
 		return entityManager.find(clazz, id);
 	}
 
@@ -48,5 +55,10 @@ public class BaseDaoImpl implements BaseDao {
 			BaseDomain object = (BaseDomain) iterator.next();
 			persist(object);
 		}
+	}
+	
+	@Override
+	public void update(BaseDomain ob) {
+		getSession().update(ob);
 	}
 }

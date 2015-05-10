@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.akash.model.domain.Person;
 import com.akash.model.domain.validator.PersonValidator;
 import com.akash.service.PersonService;
-import com.akash.service.impl.CustomValidator;
 
 //	http://www.journaldev.com/2668/spring-mvc-form-validation-example-using-annotation-and-custom-validator-implementation
 
@@ -38,76 +37,84 @@ import com.akash.service.impl.CustomValidator;
 //	http://www.eclipsezone.com/eclipse/forums/t53459.html
 //	http://xstream.codehaus.org/tutorial.html
 
-
 // important =>   intercept the call of session in db in hibernate
 
-
 @Controller
-public class DashboardController
-{
+public class DashboardController {
 	Logger logger = Logger.getLogger(DashboardController.class);
-	
+
 	@Autowired
-	@Qualifier(value="personService")
+	@Qualifier(value = "personService")
 	private PersonService personService;
-	
+
 	@Value("${IsValidExample}")
 	private boolean isValidExample;
-	
+
 	@Value("${IsValidFile}")
 	private boolean isValidFile;
-	
-	@RequestMapping(value="/", method=RequestMethod.GET)
-	public String homePage(HttpServletRequest req, HttpServletResponse res, Model model)
-	{
-		logger.debug("index page:"+isValidExample);
-		List listOfUsers=new ArrayList();
-		for(int i=0; i<5; i++)
-		{
-			Map mapData=new HashMap();
-			mapData.put("name", "rahul dravid_"+(i+1));
-			mapData.put("age", i+20);
-			mapData.put("salary", i*10+200);
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String homePage(HttpServletRequest req, HttpServletResponse res,
+			Model model) {
+		logger.debug("index page:" + isValidExample);
+		List listOfUsers = new ArrayList();
+		for (int i = 0; i < 5; i++) {
+			Map mapData = new HashMap();
+			mapData.put("name", "rahul dravid_" + (i + 1));
+			mapData.put("age", i + 20);
+			mapData.put("salary", i * 10 + 200);
 			listOfUsers.add(mapData);
 		}
 		model.addAttribute("listOfUsers", listOfUsers);
 		return "index";
 	}
-	
-	@RequestMapping(value="/header" , method=RequestMethod.GET)
-	public String header(Model model)
-	{
+
+	@RequestMapping(value = "/header", method = RequestMethod.GET)
+	public String header(Model model) {
 		logger.debug("header part executed...");
 		model.addAttribute("name", "akash");
 		return "header";
 	}
-	
-	@RequestMapping(value="/readPerson/{personId}", method=RequestMethod.GET)
-	@ResponseBody
-	public Person readPerson(@PathVariable String personId, Model model)
-	{
-		long personIdAsLong=CustomValidator.parseStrTolong(personId, 0l);
-		Person person=personService.get(personIdAsLong);
-		return person;
-	}
-	
+
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
-	    binder.setValidator(new PersonValidator());
+		binder.setValidator(new PersonValidator());
 	}
-	
-	@RequestMapping(value="/addPerson", method=RequestMethod.GET)
-	public String addPerson(Model model)
-	{
+
+	@RequestMapping(value = "/addPerson", method = RequestMethod.GET)
+	public String addPerson(Model model) {
 		model.addAttribute("person", new Person());
 		return "addPerson";
 	}
-	
-	@RequestMapping(value="/savePerson", method=RequestMethod.POST)
-	public String savePerson(@Validated Person person, BindingResult result ,Model model)
-	{
-		if( !result.hasErrors() )
-			personService.save(person);
+
+	@RequestMapping(value = "/savePerson", method = RequestMethod.POST)
+	public String savePerson(@Validated Person person, BindingResult result,
+			Model model) {
+		if (!result.hasErrors()) {
+			if (person.getVersion() == null) {
+				personService.save(person);
+			} else {
+				logger.error("XXXXXXXXXXX before merge XXXXXXXXXXXXXX");
+//				personService.merge(person);
+				personService.update(person);
+				logger.error("XXXXXXXXXXX after merge XXXXXXXXXXXXXX");
+			}
+		}
 		return "addPerson";
+	}
+
+	@RequestMapping(value = "/getAllPerson", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Person> getAllPerson(Model model) {
+
+		return personService.getAllPerson();
+	}
+
+	@RequestMapping(value = "/editPerson/{personId}", method = RequestMethod.GET)
+	public String editPerson(@PathVariable String personId, Model model) {
+
+		Person person = personService.get(personId);
+		model.addAttribute("person", person);
+		return "editPerson";
 	}
 }

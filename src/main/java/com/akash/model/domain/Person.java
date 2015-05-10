@@ -1,40 +1,17 @@
 package com.akash.model.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Version;
 
 import com.akash.constant.Gender;
 
 @Entity
-public class Person implements BaseDomain
+public class Person extends AbstractBaseDomain
 {
-	@Id @GeneratedValue
-	private long id;
-	@Version
-	private int version;
-	 
+	
 	private String name;
 	private int age;
 	private boolean isNabalik;
 	private Gender gender;
-	
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
 
 	public String getName() {
 		return name;
