@@ -14,6 +14,9 @@ import org.springframework.web.client.RestTemplate;
 //http://stackoverflow.com/questions/14423638/which-jar-file-contains-the-jsonprocessingexception-class
 //http://howtodoinjava.com/2015/02/20/spring-restful-client-resttemplate-example/
 //http://stackoverflow.com/questions/15739838/post-request-with-spring-resttemplate-badrequest-400
+
+//https://malalanayake.wordpress.com/2014/06/27/spring-security-on-rest-api/
+//http://stackoverflow.com/questions/10826293/restful-authentication-via-spring
 public class CrunchifyRESTServiceClient {
 
 	public static void main(String args[]) {
