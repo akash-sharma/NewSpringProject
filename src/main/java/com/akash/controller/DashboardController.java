@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.akash.hibernate.utils.HibernateUtils;
 import com.akash.model.domain.Person;
 import com.akash.model.domain.validator.PersonValidator;
 import com.akash.service.PersonService;
@@ -110,11 +111,17 @@ public class DashboardController {
 		return personService.getAllPerson();
 	}
 
+	//NOTE : both load() and get() fires 2 select queries
 	@RequestMapping(value = "/editPerson/{personId}", method = RequestMethod.GET)
 	public String editPerson(@PathVariable String personId, Model model) {
 
-		Person person = personService.get(personId);
-		model.addAttribute("person", person);
+		logger.error("<<<<<<<<<<<<<<<<<<queries starting here>>>>>>>>>>>>>>>>>>>>>>>>");
+		Person person1 = personService.get(personId);
+		Person person2 = personService.get(personId);
+//		Person person3 = personService.load(personId);
+//		Person person4 = personService.load(personId);
+		logger.error("<<<<<<<<<<<<<<<<<<queries ending here>>>>>>>>>>>>>>>>>>>>>>>>");
+		model.addAttribute("person", person1);
 		return "editPerson";
 	}
 }

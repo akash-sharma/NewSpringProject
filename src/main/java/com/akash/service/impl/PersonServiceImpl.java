@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.akash.hibernate.utils.HibernateUtils;
 import com.akash.model.domain.BaseDomain;
 import com.akash.model.domain.Person;
 import com.akash.model.domain.dao.BaseDao;
@@ -30,6 +31,14 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public Person get(String id) {
 		return (Person) baseDao.get(Person.class, id);
+	}
+	
+	@Override
+	public Person load(String id) {
+		
+		Person p = (Person) baseDao.load(Person.class, id);
+		HibernateUtils.initializeAndUnproxy(p);
+		return p;
 	}
 
 	@Override

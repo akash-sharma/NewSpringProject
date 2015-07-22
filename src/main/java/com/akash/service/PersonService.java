@@ -8,6 +8,7 @@ import com.akash.model.domain.Person;
 public interface PersonService
 {
 	public Person get(String id);
+	public Person load(String id);
 	public void save(Person person);
 	public void updateName(String id, String name);
 	public List<Person> getAllPerson();

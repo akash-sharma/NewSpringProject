@@ -17,7 +17,7 @@ public class BaseDaoImpl implements BaseDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-
+	
 	public void setEntityManager(EntityManager entityManager) {
 		System.out.println("entityManager : " + entityManager);
 		this.entityManager = entityManager;
@@ -30,6 +30,11 @@ public class BaseDaoImpl implements BaseDao {
 
 	@Override
 	public Session getSession() {
+		
+		/*SessionFactory sessionFactory = entityManager.unwrap(org.hibernate.Session.class).getSessionFactory();
+		Session session = sessionFactory.withOptions().interceptor(new AuditInterceptor()).openSession();
+		
+		return session;*/
 		return getEntityManager().unwrap(Session.class);
 	}
 
@@ -46,6 +51,11 @@ public class BaseDaoImpl implements BaseDao {
 	@Override
 	public BaseDomain get(Class<? extends BaseDomain> clazz, String id) {
 		return entityManager.find(clazz, id);
+	}
+	
+	@Override
+	public BaseDomain load(Class<? extends BaseDomain> clazz, String id) {
+		return (BaseDomain) getSession().load(clazz, id);
 	}
 
 	@Override

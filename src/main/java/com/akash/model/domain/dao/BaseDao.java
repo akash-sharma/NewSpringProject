@@ -17,6 +17,8 @@ public interface BaseDao {
 	public void persist(BaseDomain ob);
 
 	public BaseDomain get(Class<? extends BaseDomain> clazz, String id);
+	
+	public BaseDomain load(Class<? extends BaseDomain> clazz, String id);
 
 	public BaseDomain merge(BaseDomain ob);
 	

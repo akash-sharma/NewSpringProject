@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -30,10 +31,11 @@ public class PersonDaoImpl implements PersonDao {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Person> getAllPerson() {
-
-		return baseDao.getEntityManager()
-				.createQuery(GET_ALL_PERSON, Person.class).getResultList();
+		//SQLQueryImpl -> abstractSessionImpl
+		Query query = baseDao.getEntityManager().createQuery(GET_ALL_PERSON, Person.class);
+		return query.getResultList();
 	}
 }
