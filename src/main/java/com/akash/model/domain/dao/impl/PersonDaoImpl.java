@@ -34,8 +34,23 @@ public class PersonDaoImpl implements PersonDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Person> getAllPerson() {
-		//SQLQueryImpl -> abstractSessionImpl
-		Query query = baseDao.getEntityManager().createQuery(GET_ALL_PERSON, Person.class);
+		// SQLQueryImpl -> abstractSessionImpl
+		Query query = baseDao.getEntityManager().createQuery(GET_ALL_PERSON,
+				Person.class);
 		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Person getPersonById(String id) {
+		Query queryPersonById = baseDao.getEntityManager().createNamedQuery(
+				"findPersonById");
+		queryPersonById.setParameter("id", id);
+		List<Person> personList = queryPersonById.getResultList();
+		if (!personList.isEmpty()) {
+			Person person = personList.get(0);
+			return person;
+		}
+		return null;
 	}
 }

@@ -112,16 +112,18 @@ public class DashboardController {
 	}
 
 	//NOTE : both load() and get() fires 2 select queries
+	//i.e. get with get , load with load, get with load
 	@RequestMapping(value = "/editPerson/{personId}", method = RequestMethod.GET)
 	public String editPerson(@PathVariable String personId, Model model) {
 
 		logger.error("<<<<<<<<<<<<<<<<<<queries starting here>>>>>>>>>>>>>>>>>>>>>>>>");
-		Person person1 = personService.get(personId);
-		Person person2 = personService.get(personId);
-//		Person person3 = personService.load(personId);
+		Person person1 = personService.getPersonById(personId);
+//		Person person2 = personService.get(personId);
+		Person person3 = personService.get(personId);
 //		Person person4 = personService.load(personId);
+		Person person5 = personService.load(personId);
 		logger.error("<<<<<<<<<<<<<<<<<<queries ending here>>>>>>>>>>>>>>>>>>>>>>>>");
-		model.addAttribute("person", person1);
+		model.addAttribute("person", person5);
 		return "editPerson";
 	}
 }

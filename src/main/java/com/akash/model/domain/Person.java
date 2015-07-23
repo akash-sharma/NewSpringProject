@@ -1,10 +1,16 @@
 package com.akash.model.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
 
 import com.akash.constant.Gender;
 
 @Entity
+@NamedQuery(
+	    name="findPersonById",
+	    query="SELECT p FROM Person p where p.id=:id"
+	)
+
 public class Person extends AbstractBaseDomain
 {
 	

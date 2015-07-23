@@ -14,4 +14,5 @@ public interface PersonService
 	public List<Person> getAllPerson();
 	public BaseDomain merge(BaseDomain ob);
 	public void update(BaseDomain ob);
+	public Person getPersonById(String id);
 }

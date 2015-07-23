@@ -65,4 +65,9 @@ public class PersonServiceImpl implements PersonService {
 	public void update(BaseDomain ob) {
 		baseDao.update(ob);
 	}
+	
+	@Override
+	public Person getPersonById(String id) {
+		return personDao.getPersonById(id);
+	}
 }
