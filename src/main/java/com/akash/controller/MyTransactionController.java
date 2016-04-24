@@ -3,6 +3,7 @@ package com.akash.controller;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,17 +12,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.akash.constant.Gender;
 import com.akash.model.domain.Person;
-
+import com.akash.service.impl.MyTransactionService;
 
 @Controller
 @RequestMapping("/MyTransaction")
 public class MyTransactionController {
 
+	/**
+	 * NOTE : new transaction is not created when method is called from same
+	 * class.
+	 * 
+	 * hence, test1 = test3 = test5
+	 * 
+	 * test2 = test4 = test6
+	 */
+
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	@Autowired
+	private MyTransactionService myTransactionService;
+
 	/**
-	 * 
+	 * 1,2,4,5 will be saved in DB
 	 */
 	@RequestMapping("/test1")
 	@Transactional
@@ -38,6 +51,9 @@ public class MyTransactionController {
 		return "test1";
 	}
 
+	/**
+	 * no entry will be saved in DB
+	 */
 	@RequestMapping("/test2")
 	@Transactional
 	@ResponseBody
@@ -49,6 +65,9 @@ public class MyTransactionController {
 		return "test2";
 	}
 
+	/**
+	 * 1,2,4,5 will be saved in DB
+	 */
 	@RequestMapping("/test3")
 	@Transactional
 	@ResponseBody
@@ -64,6 +83,9 @@ public class MyTransactionController {
 		return "test3";
 	}
 
+	/**
+	 * no entry will be saved in DB
+	 */
 	@RequestMapping("/test4")
 	@Transactional
 	@ResponseBody
@@ -75,6 +97,9 @@ public class MyTransactionController {
 		return "test4";
 	}
 
+	/**
+	 * 1,2,4,5 will be saved in DB
+	 */
 	@RequestMapping("/test5")
 	@Transactional
 	@ResponseBody
@@ -90,6 +115,9 @@ public class MyTransactionController {
 		return "test5";
 	}
 
+	/**
+	 * no entry will be saved in DB
+	 */
 	@RequestMapping("/test6")
 	@Transactional
 	@ResponseBody
@@ -99,6 +127,102 @@ public class MyTransactionController {
 			noTransaction(count, "test6");
 		}
 		return "test6";
+	}
+
+	/**
+	 * 1,2,4,5 will be saved in DB
+	 */
+	@RequestMapping("/test7")
+	@Transactional
+	@ResponseBody
+	public String test7() {
+
+		for (int count = 1; count <= 5; count++) {
+			try {
+				myTransactionService.requiresNew(count, "test7");
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+		return "test7";
+	}
+
+	/**
+	 * 1,2 will be saved in DB
+	 */
+	@RequestMapping("/test8")
+	@Transactional
+	@ResponseBody
+	public String test8() {
+
+		for (int count = 1; count <= 5; count++) {
+			myTransactionService.requiresNew(count, "test8");
+		}
+		return "test8";
+	}
+
+	/**
+	 * no entry will be saved in DB
+	 */
+	@RequestMapping("/test9")
+	@Transactional
+	@ResponseBody
+	public String test9() {
+
+		for (int count = 1; count <= 5; count++) {
+			try {
+				myTransactionService.required(count, "test9");
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+		return "test9";
+	}
+
+	/**
+	 * no entry will be saved in DB
+	 */
+	@RequestMapping("/test10")
+	@Transactional
+	@ResponseBody
+	public String test10() {
+
+		for (int count = 1; count <= 5; count++) {
+			myTransactionService.required(count, "test10");
+		}
+		return "test10";
+	}
+
+	/**
+	 * 1,2,4,5 will be saved in DB
+	 */
+	@RequestMapping("/test11")
+	@Transactional
+	@ResponseBody
+	public String test11() {
+
+		for (int count = 1; count <= 5; count++) {
+			try {
+				myTransactionService.noTransaction(count, "test11");
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+		return "test11";
+	}
+
+	/**
+	 * no entry will be saved in DB
+	 */
+	@RequestMapping("/test12")
+	@Transactional
+	@ResponseBody
+	public String test12() {
+
+		for (int count = 1; count <= 5; count++) {
+			myTransactionService.noTransaction(count, "test12");
+		}
+		return "test12";
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
