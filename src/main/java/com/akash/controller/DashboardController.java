@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.akash.constant.Gender;
 import com.akash.hibernate.utils.HibernateUtils;
 import com.akash.model.domain.Person;
 import com.akash.model.domain.validator.PersonValidator;
@@ -89,7 +91,7 @@ public class DashboardController {
 	}
 
 	@RequestMapping(value = "/savePerson", method = RequestMethod.POST)
-	public String savePerson(@Validated Person person, BindingResult result,
+	public String savePerson(HttpServletRequest request, @Validated Person person, BindingResult result,
 			Model model) {
 		if (!result.hasErrors()) {
 			if (person.getVersion() == null) {
@@ -125,5 +127,22 @@ public class DashboardController {
 		logger.error("<<<<<<<<<<<<<<<<<<queries ending here>>>>>>>>>>>>>>>>>>>>>>>>");
 		model.addAttribute("person", person5);
 		return "editPerson";
+	}
+	
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	@ResponseBody
+	@Transactional
+	public String testTransaction() {
+		
+		Person person = new Person();
+		person.setAge(20);
+		person.setName("random");
+		person.setGender(Gender.Male);
+		person.setIsNabalik(false);
+		personService.save(person);
+		try {
+			personService.updateName("5871667e-c678-444a-b6b6-afd21e336e11", "aaaaaaa");
+		}catch(Exception e) {}
+		return "true";
 	}
 }

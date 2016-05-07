@@ -1,4 +1,4 @@
-package com.akash.service.impl;
+package com.akash.controller;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

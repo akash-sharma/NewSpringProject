@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.akash.constant.Gender;
 import com.akash.model.domain.Person;
-import com.akash.service.impl.MyTransactionService;
 
 @Controller
 @RequestMapping("/MyTransaction")
