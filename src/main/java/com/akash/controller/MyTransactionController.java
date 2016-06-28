@@ -264,4 +264,13 @@ public class MyTransactionController {
 		person.setGender(Gender.Male);
 		entityManager.persist(person);
 	}
+
+	@RequestMapping("/errorInSecondTransaction")
+	@ResponseBody
+	public String errorInSecondTransaction() {
+
+		myTransactionService.errorInSecondTransaction(1);
+		myTransactionService.errorInSecondTransaction(2);
+		return "errorInSecondTransaction";
+	}
 }

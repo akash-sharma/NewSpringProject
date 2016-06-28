@@ -56,4 +56,18 @@ public class MyTransactionService {
 		person.setGender(Gender.Male);
 		entityManager.persist(person);
 	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void errorInSecondTransaction(int count) {
+		
+		if(count==2) {
+			throw new RuntimeException("");
+		}
+		Person person = new Person();
+		person.setName("errorInSecondTransaction");
+		person.setAge(20 + count);
+		person.setIsNabalik(false);
+		person.setGender(Gender.Male);
+		entityManager.persist(person);
+	}
 }
