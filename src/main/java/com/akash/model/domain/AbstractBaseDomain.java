@@ -41,8 +41,7 @@ public class AbstractBaseDomain implements BaseDomain {
 			return false;
 		}
 		BaseDomain other = (BaseDomain) o;
-		if (this.id != null && other.getId() != null
-				&& this.id.equals(other.getId())) {
+		if (this.id != null && other.getId() != null && this.id.equals(other.getId())) {
 			return true;
 		}
 		return false;
@@ -50,10 +49,11 @@ public class AbstractBaseDomain implements BaseDomain {
 
 	public int hashCode() {
 
-		if (this.id != null)
-			return this.id.hashCode();
-		else
-			return super.hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+
+		return result;
 	}
 
 	public String toString() {
