@@ -6,6 +6,13 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
+/**
+ * This class is based on below blog link :
+ * http://www.onjava.com/pub/a/onjava/2006/09/13/dont-let-hibernate-steal-your-identity.html
+ * 
+ * @author Akash.Sharma
+ *
+ */
 @MappedSuperclass
 public class AbstractBaseDomain implements BaseDomain {
 
