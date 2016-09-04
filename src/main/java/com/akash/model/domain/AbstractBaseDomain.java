@@ -27,7 +27,9 @@ public class AbstractBaseDomain implements BaseDomain {
 	}
 
 	public void setId(String id) {
-		this.id = id;
+		// this.id = id;
+		// As id is used for key in collection of objects, it must be immutable.
+		throw new RuntimeException("Invalid operation, id field is immutable");
 	}
 
 	public Integer getVersion() {
