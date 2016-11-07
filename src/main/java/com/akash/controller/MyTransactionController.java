@@ -233,7 +233,7 @@ public class MyTransactionController {
 		Person person = new Person();
 		person.setName(name);
 		person.setAge(20 + count);
-		person.setIsNabalik(false);
+		person.setNabalik(false);
 		person.setGender(Gender.Male);
 		entityManager.persist(person);
 	}
@@ -247,7 +247,7 @@ public class MyTransactionController {
 		Person person = new Person();
 		person.setName(name);
 		person.setAge(20 + count);
-		person.setIsNabalik(false);
+		person.setNabalik(false);
 		person.setGender(Gender.Male);
 		entityManager.persist(person);
 	}
@@ -260,7 +260,7 @@ public class MyTransactionController {
 		Person person = new Person();
 		person.setName(name);
 		person.setAge(20 + count);
-		person.setIsNabalik(false);
+		person.setNabalik(false);
 		person.setGender(Gender.Male);
 		entityManager.persist(person);
 	}
