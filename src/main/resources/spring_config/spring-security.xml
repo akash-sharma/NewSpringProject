@@ -24,7 +24,7 @@
 			username-parameter="j_username"
 			password-parameter="j_password" />
 		<logout logout-url="/logout" logout-success-url="/logoutSuccess.html" />
-	</http>
+	</http> 
 	
 	<authentication-manager>
 		<authentication-provider user-service-ref="customUserDetailsService">  
