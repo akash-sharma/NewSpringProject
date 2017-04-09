@@ -25,7 +25,7 @@ public class MyTransactionService {
 		Person person = new Person();
 		person.setName(name);
 		person.setAge(20 + count);
-		person.setNabalik(false);
+		person.setIsNabalik(false);
 		person.setGender(Gender.Male);
 		entityManager.persist(person);
 	}
@@ -39,7 +39,7 @@ public class MyTransactionService {
 		Person person = new Person();
 		person.setName(name);
 		person.setAge(20 + count);
-		person.setNabalik(false);
+		person.setIsNabalik(false);
 		person.setGender(Gender.Male);
 		entityManager.persist(person);
 	}
@@ -52,7 +52,7 @@ public class MyTransactionService {
 		Person person = new Person();
 		person.setName(name);
 		person.setAge(20 + count);
-		person.setNabalik(false);
+		person.setIsNabalik(false);
 		person.setGender(Gender.Male);
 		entityManager.persist(person);
 	}
@@ -66,7 +66,7 @@ public class MyTransactionService {
 		Person person = new Person();
 		person.setName("errorInSecondTransaction");
 		person.setAge(20 + count);
-		person.setNabalik(false);
+		person.setIsNabalik(false);
 		person.setGender(Gender.Male);
 		entityManager.persist(person);
 	}

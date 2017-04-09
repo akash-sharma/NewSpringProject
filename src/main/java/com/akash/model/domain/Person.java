@@ -13,10 +13,9 @@ import com.akash.constant.Gender;
 
 public class Person extends AbstractBaseDomain
 {
-	
 	private String name;
 	private int age;
-	private boolean isNabalik;
+	private Boolean isNabalik;
 	private Gender gender;
 
 	public String getName() {
@@ -35,11 +34,11 @@ public class Person extends AbstractBaseDomain
 		this.age = age;
 	}
 
-	public boolean isNabalik() {
+	public Boolean getIsNabalik() {
 		return isNabalik;
 	}
 
-	public void setNabalik(boolean isNabalik) {
+	public void setIsNabalik(Boolean isNabalik) {
 		this.isNabalik = isNabalik;
 	}
 

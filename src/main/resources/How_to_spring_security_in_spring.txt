@@ -93,16 +93,22 @@ The <http> element is the parent for all web-related namespace functionality. Th
 
 
 
-<http auto-config='true'>
-	<intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-	<intercept-url pattern="/**" access="IS_AUTHENTICATED_REMEMBERED" />
-	<form-login 
-	    	login-page='/login' 
-		default-target-url="/" 
-		authentication-failure-url="/login?error" 
-		username-parameter="j_username"
-		password-parameter="j_password" />
-</http>
+<global-method-security secured-annotations="enabled" pre-post-annotations="enabled" />
+    
+    <http pattern="/favicon.ico" security="none" />
+    <http pattern="/myRest/**" security="none" />
+    <http pattern="/*/*.js" security="none" />
+    
+    <http auto-config='true'>
+    	<intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<intercept-url pattern="/endpoints/*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<form-login login-page='/login'
+			default-target-url="/"
+			authentication-failure-url="/login?error"
+			username-parameter="j_username"
+			password-parameter="j_password" />
+		<logout logout-url="/logout" logout-success-url="/logoutSuccess.html" />
+	</http> 
 
 
 
