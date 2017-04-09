@@ -226,3 +226,72 @@ Annotations Used for authorizations that can be used on classes or methods :
 @PreAuthorize("isAnonymous()")
 @PreAuthorize("hasAuthority('ROLE_TELLER')")
 
+
+--------------------------------------------------------------
+Application security boils down to two more or less independent problems: 
+authentication (who are you?) and authorization (what are you allowed to do?).
+
+For Authentication:
+One ProviderManager has many AuthenticationProvider
+
+For Authorization :
+One AccessDecisionManager has many AccessDecisionVoter 
+
+interface AccessDecisionManager {
+	void decide(Authentication authentication, Object object,Collection<ConfigAttribute> configAttributes);
+	boolean supports(ConfigAttribute attribute);
+	boolean supports(Class<?> clazz);
+}
+
+public interface AccessDecisionVoter<S> {
+	int ACCESS_GRANTED = 1;
+	int ACCESS_ABSTAIN = 0;
+	int ACCESS_DENIED = -1;
+
+	boolean supports(ConfigAttribute attribute);
+	boolean supports(Class<?> clazz);
+	int vote(Authentication authentication, S object,Collection<ConfigAttribute> attributes);
+}
+
+public class RoleVoter implements AccessDecisionVoter<Object> {
+	private String rolePrefix = "ROLE_";
+	
+	public boolean supports(ConfigAttribute attribute) {
+		if ((attribute.getAttribute() != null)&& attribute.getAttribute().startsWith(rolePrefix)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public int vote(Authentication authentication, Object object,Collection<ConfigAttribute> attributes) {
+		if(authentication == null) {
+			return ACCESS_DENIED;
+		}
+		int result = ACCESS_ABSTAIN;
+		Collection<? extends GrantedAuthority> authorities = extractAuthorities(authentication);
+		for (ConfigAttribute attribute : attributes) {
+			if (this.supports(attribute)) {
+				result = ACCESS_DENIED;
+				// Attempt to find a matching granted authority
+				for (GrantedAuthority authority : authorities) {
+					if (attribute.getAttribute().equals(authority.getAuthority())) {
+						return ACCESS_GRANTED;
+					}
+				}
+			}
+		}
+		return result;
+	}
+}
+
+
+public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
+
+	public static final String IS_AUTHENTICATED_FULLY = "IS_AUTHENTICATED_FULLY";
+	public static final String IS_AUTHENTICATED_REMEMBERED = "IS_AUTHENTICATED_REMEMBERED";
+	public static final String IS_AUTHENTICATED_ANONYMOUSLY = "IS_AUTHENTICATED_ANONYMOUSLY";
+	
+	.....
+}
