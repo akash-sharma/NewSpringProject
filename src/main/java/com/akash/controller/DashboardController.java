@@ -144,7 +144,7 @@ public class DashboardController extends AbstractController {
 		person.setAge(20);
 		person.setName("random");
 		person.setGender(Gender.Male);
-		person.setIsNabalik(false);
+		person.setNabalik(false);
 		personService.save(person);
 		try {
 			personService.updateName("5871667e-c678-444a-b6b6-afd21e336e11", "aaaaaaa");
