@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -47,7 +48,9 @@ import com.akash.service.PersonService;
 // important =>   intercept the call of session in db in hibernate
 
 @Controller
-public class DashboardController {
+@Secured({"ROLE_ADMIN", "ROLE_USER"})
+public class DashboardController extends AbstractController {
+	
 	Logger logger = Logger.getLogger(DashboardController.class);
 
 	@Autowired
@@ -72,6 +75,7 @@ public class DashboardController {
 			listOfUsers.add(mapData);
 		}
 		model.addAttribute("listOfUsers", listOfUsers);
+		test();
 		return "index";
 	}
 
@@ -179,7 +183,9 @@ public class DashboardController {
 		// get output stream of the response
 		OutputStream outStream = response.getOutputStream();
 		String string = getCsvContent(outStream);
+		System.out.println("outside method");
 //		outStream.write(string.getBytes(Charset.forName("UTF-8")));
+		outStream.flush();
 		outStream.close();
 		
 		
@@ -191,9 +197,10 @@ public class DashboardController {
 
 		String str = "RefID_1466673403019,bbbbbbbbbbbbbbbb,ccccccccccccccc,01/20/1990,01/20/1990,RefID_1466673403019,01/20/1990\n";
 		StringBuilder content = new StringBuilder();
-		for (int i = 0; i < 6000000; i++) {
+		for (int i = 0; i < 10000000; i++) {
 			outStream.write(str.getBytes(Charset.forName("UTF-8")));
 //			content.append(str);
+//			outStream.flush();
 		}
 		return content.toString();
 	}
