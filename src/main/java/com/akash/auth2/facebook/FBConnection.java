@@ -9,6 +9,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 public class FBConnection {
 	public static final String FB_APP_ID = "528900730583058";
 	public static final String FB_APP_SECRET = "6fc85bbb214d09fe65fa5057cdcb6a6d";
@@ -20,7 +24,7 @@ public class FBConnection {
 			fbLoginUrl = "http://www.facebook.com/dialog/oauth?" + "client_id="
 					+ FBConnection.FB_APP_ID + "&redirect_uri="
 					+ URLEncoder.encode(FBConnection.REDIRECT_URI, "UTF-8")
-					+ "&scope=email,user_likes,publish_actions,user_friends";
+					+ "&scope=email,user_likes,user_friends";
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -72,10 +76,12 @@ public class FBConnection {
 		System.out.println(b);
 		System.out
 				.println("===========Response for bearer token ends here=============");
-		accessToken = b.toString();
-		if (accessToken.startsWith("{")) {
-			throw new RuntimeException("ERROR: Access Token Invalid: "
-					+ accessToken);
+		JSONObject json;
+		try {
+			json = (JSONObject) new JSONParser().parse(b.toString());
+			accessToken = (String)json.get("access_token");
+		} catch (ParseException e) {
+			System.out.println("unable to parse access token response : "+e);
 		}
 		return accessToken;
 	}

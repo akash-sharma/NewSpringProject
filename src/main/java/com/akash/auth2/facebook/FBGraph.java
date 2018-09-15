@@ -18,7 +18,7 @@ public class FBGraph {
 	}
 
 	public String getFBGraph() {
-		String loggedInUserData = "https://graph.facebook.com/v2.2/me?"
+		String loggedInUserData = "https://graph.facebook.com/v2.10/me?fields=name,first_name,email,gender&access_token="
 				+ accessToken;
 		return getGraphDataFromUrl(loggedInUserData);
 	}
@@ -74,7 +74,7 @@ public class FBGraph {
 		try {
 			JSONObject json = (JSONObject) new JSONParser().parse(fbGraph);
 			fbProfile.put("id", (String) json.get("id"));
-			fbProfile.put("first_name", (String) json.get("first_name"));
+			fbProfile.put("first_name", (String) json.get("name"));
 			if (json.containsKey("email"))
 				fbProfile.put("email", (String) json.get("email"));
 			if (json.containsKey("gender"))
