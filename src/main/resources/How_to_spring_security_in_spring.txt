@@ -10,6 +10,7 @@ http://www.baeldung.com/2012/12/20/authentication-against-a-restful-service/
 ***https://www.quora.com/How-do-I-make-AJAX-calls-secure
 	-> CSRF token
 	-> Cross-Site Scripting filter
+	-> SQL injection
 
 ****https://spring.io/guides/topicals/spring-security-architecture/
 
